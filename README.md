@@ -21,3 +21,39 @@ In the training process, I let my model run 400 episodes and have a maximum iter
 There has been PLENTY of troubleshooting! First, just getting the data formatted correctly took my some time. Initially in my replay buffer, I stored it as a 2D numpy array and that allowed for quick slicing and indexing when sampling. However, that gave me data dimension troubles that simply weren't worth the amount of spaghetti code necessary to fix them. So I reverted back to storing it as a list of lists which I then generate random indices for and then loop through my sample to get my desired numpy arrays of states, rewards, etc.
 
 Additionally, in my training loop, I forgot to set my current state equal to the successor state at the end of my iteration which resulted in my rocket starting off random and learning to engage only the right or left engine. This caused the lander to begin doing flips the whole way down which, while that's pretty cool, it was not efficient nor the purpose of this exercise. It took my awhile to fix that because it was such a minor bug to notice in my code.
+
+### Visualization
+
+At the beginning of training, it is all random actions being chosen so we see behavior like this:  
+
+![SegmentLocal](RL_Learning_Gif_2.gif "segment")
+
+As the lander acts like this and recieved large negative rewards, it learns that it shouldn't be doing this and weights are adjusted.
+
+But later after about 200 episodes, we see the lander aiming itself and learning how to land. This is about as good as I got with my model.  
+
+![SegmentLocal](Project_gif_2.gif "segment")
+
+And after 300 episodes:  
+
+![SegmentLocal](LunarLanderGif4.gif "segment")
+
+### Conclusion and Results
+
+It seems that my model did work, however I would love to experiment more with it. For instance, I believe that changing the architecture of the network would be interesting. Perhaps I would add or subtract a hidden layer as well as change the sizes of the hidden layers. I also would like to look into using Huber loss instead of MSE in my model because based on what I found online, it also seems like an appropriate loss function. 
+
+My behavior took around 200 episodes to reall =y see success and I wonder what I could change that would allow me to see a faster convergence. I would also like to reimplement my ReplayBuffer with the Numpy 2D array, as I think that would speed up the training process at least with faster computation.
+
+Overall, I think that this was an interesting project and I appreciate OpenAI's efforts to making reinforcement learning environments accessible. I learned a lot about RL in the process of completing this project and I hope to continue on with this project to learn even more.
+
+## References
+
+https://medium.com/@jonathan_hui/rl-dqn-deep-q-network-e207751f7ae4
+
+https://towardsdatascience.com/solving-lunar-lander-openaigym-reinforcement-learning-785675066197 
+
+https://github.com/openai/gym/blob/master/gym/envs/box2d/lunar_lander.py
+
+https://becominghuman.ai/beat-atari-with-deep-reinforcement-learning-part-2-dqn-improvements-d3563f665a2c
+
+https://github.com/shivaverma/OpenAIGym
